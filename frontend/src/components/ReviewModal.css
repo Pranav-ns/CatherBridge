@@ -1,0 +1,103 @@
+.review-modal-content {
+  background: var(--surface-color);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+  padding: 2rem;
+  width: 100%;
+  max-width: 560px;
+  position: relative;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.review-modal-header {
+  margin-bottom: 1.25rem;
+  flex-shrink: 0;
+}
+
+.review-modal-header h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+
+.review-modal-subtitle {
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.review-form-box {
+  background: var(--bg-secondary);
+  border: 1px dashed var(--border-orange);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  flex-shrink: 0;
+}
+
+.review-form-box h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-family: 'Outfit', sans-serif;
+}
+
+.review-form-box .form-group {
+  margin-bottom: 0.75rem;
+}
+
+.reviews-scroll {
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-right: 0.25rem;
+}
+
+.review-item {
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.review-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.reviewer-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.review-stars-row {
+  display: flex;
+  gap: 0.15rem;
+}
+
+.review-text {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 0.4rem;
+}
+
+.review-date-text {
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+
+.no-reviews-msg {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 2rem;
+  font-size: 0.9rem;
+}

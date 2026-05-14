@@ -1,0 +1,4 @@
+* { box-sizing: border-box; }
+body { margin: 0; }
+.app { min-height: 100vh; }
+main { min-height: calc(100vh - 68px); }

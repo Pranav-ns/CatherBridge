@@ -1,0 +1,174 @@
+.subscribe-modal {
+  background: var(--surface-color);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+  padding: 2rem;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+}
+
+.subscribe-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.subscribe-icon {
+  font-size: 2.5rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-xlight);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--primary-light);
+}
+
+.subscribe-header h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+
+.subscribe-caterer {
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.subscribe-section-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+/* Plan cards */
+.plan-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.plan-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1rem 0.5rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.plan-card:hover {
+  border-color: var(--primary-color);
+  background: var(--primary-xlight);
+}
+
+.plan-card-active {
+  border-color: var(--primary-color);
+  background: var(--primary-xlight);
+  box-shadow: 0 0 0 2px rgba(249,115,22,0.2);
+}
+
+.plan-badge {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary-color);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.plan-icon {
+  font-size: 1.5rem;
+}
+
+.plan-label {
+  font-weight: 700;
+  font-size: 0.875rem;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-primary);
+}
+
+.plan-desc {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+/* Meals selector */
+.meals-selector {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 0.25rem;
+}
+
+.meal-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.65rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.meal-btn:hover,
+.meal-btn-active {
+  border-color: var(--primary-color);
+  background: var(--primary-xlight);
+  color: var(--primary-color);
+}
+
+/* Summary */
+.subscribe-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--primary-xlight);
+  border: 1px solid var(--primary-light);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--primary-dark);
+  margin-top: 1rem;
+}
+
+/* Success state */
+.subscribe-success {
+  text-align: center;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.subscribe-success h2 { font-size: 1.5rem; }
+.subscribe-success p { color: var(--text-secondary); }
