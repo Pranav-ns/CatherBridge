@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema({
     enum: ['client'],
     default: 'client',
   },
+  walletBalance: {
+    type: Number,
+    default: 0,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

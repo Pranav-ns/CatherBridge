@@ -21,6 +21,8 @@ const catererRoutes = require('./routes/caterer.routes');
 const requestRoutes = require('./routes/request.routes');
 const reviewRoutes = require('./routes/review.routes');
 const subscriptionRoutes = require('./routes/subscription.routes');
+const paymentRoutes = require('./routes/payment.routes');
+const walletRoutes = require('./routes/wallet.routes');
 
 // Mount routers
 app.use('/api/auth', authRoutes);
@@ -28,6 +30,8 @@ app.use('/api/caterers', catererRoutes);
 app.use('/api/requests', requestRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/payments', paymentRoutes);
+app.use('/api/wallet', walletRoutes);
 
 // Root route
 app.get('/', (req, res) => {

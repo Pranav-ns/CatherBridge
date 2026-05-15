@@ -1,0 +1,15 @@
+
+# dependencies
+node_modules/
+backend/node_modules/
+
+# environment files
+.env
+backend/.env
+
+# cache files
+.cache/
+backend/node_modules/.cache/
+
+# macOS
+.DS_Store

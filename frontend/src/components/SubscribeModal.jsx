@@ -1,30 +1,13 @@
 import React, { useState } from 'react';
 import { X, Clock, Calendar, Utensils, CheckCircle } from 'lucide-react';
 import api from '../services/api';
+import CheckoutModal from './CheckoutModal';
 import './SubscribeModal.css';
 
 const PLANS = [
-  {
-    id: 'daily',
-    label: 'Daily',
-    icon: '🍱',
-    desc: 'Fresh meals every day',
-    badge: 'Most Popular',
-  },
-  {
-    id: 'weekly',
-    label: 'Weekly',
-    icon: '📅',
-    desc: '5 days a week plan',
-    badge: null,
-  },
-  {
-    id: 'monthly',
-    label: 'Monthly',
-    icon: '🗓️',
-    desc: 'Best value, save more',
-    badge: 'Best Value',
-  },
+  { id: 'daily', label: 'Daily', icon: '🍱', desc: 'Fresh meals every day', badge: 'Most Popular' },
+  { id: 'weekly', label: 'Weekly', icon: '📅', desc: '5 days a week plan', badge: null },
+  { id: 'monthly', label: 'Monthly', icon: '🗓️', desc: 'Best value, save more', badge: 'Best Value' },
 ];
 
 const SubscribeModal = ({ caterer, onClose }) => {
@@ -34,9 +17,15 @@ const SubscribeModal = ({ caterer, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [showCheckout, setShowCheckout] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleInitiatePayment = (e) => {
     e.preventDefault();
+    setShowCheckout(true);
+  };
+
+  const handlePaymentSuccess = async () => {
+    setShowCheckout(false);
     setLoading(true);
     setError('');
     try {
@@ -49,15 +38,24 @@ const SubscribeModal = ({ caterer, onClose }) => {
       setSuccess(true);
       setTimeout(() => onClose(), 2500);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to subscribe');
+      setError(err.response?.data?.message || 'Failed to save subscription after payment');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="modal-overlay fade-in">
-      <div className="subscribe-modal">
+    <>
+      {showCheckout && (
+        <CheckoutModal 
+          caterer={caterer} 
+          planDetails={{ plan: selectedPlan, mealsPerDay, startDate }} 
+          onComplete={handlePaymentSuccess} 
+          onClose={() => setShowCheckout(false)} 
+        />
+      )}
+      <div className="modal-overlay fade-in">
+        <div className="subscribe-modal">
         <button className="modal-close" onClick={onClose}><X size={20} /></button>
 
         {success ? (
@@ -78,7 +76,7 @@ const SubscribeModal = ({ caterer, onClose }) => {
 
             {error && <div className="modal-status error" style={{ marginBottom: '1rem' }}>{error}</div>}
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleInitiatePayment}>
               {/* Plan selection */}
               <p className="subscribe-section-label">Choose your plan</p>
               <div className="plan-cards">
@@ -135,13 +133,14 @@ const SubscribeModal = ({ caterer, onClose }) => {
               </div>
 
               <button type="submit" className="btn btn-primary w-full" style={{ marginTop: '1.25rem' }} disabled={loading}>
-                {loading ? 'Subscribing...' : '🔔 Subscribe Now'}
+                {loading ? 'Processing...' : '💳 Proceed to Payment'}
               </button>
             </form>
           </>
         )}
       </div>
     </div>
+    </>
   );
 };
 
