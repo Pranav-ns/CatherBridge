@@ -1,122 +1,155 @@
-.cuisine-filter-wrap {
+/* ── CUISINE FILTER ── */
+.cf-root {
   position: relative;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 1.5rem 0 0;
-  margin-bottom: 0.5rem;
+  padding: 0.5rem 0 1.5rem;
 }
 
-.cuisine-scroll {
+/* Scrollable strip */
+.cf-scroll {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   overflow-x: auto;
+  padding: 0.5rem 0.25rem 1rem;
   scroll-behavior: smooth;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  padding: 0.25rem 0.25rem 1rem;
-  flex: 1;
+  cursor: grab;
+  user-select: none;
 }
 
-.cuisine-scroll::-webkit-scrollbar { display: none; }
+.cf-scroll::-webkit-scrollbar { display: none; }
+.cf-dragging { cursor: grabbing; }
 
-.cuisine-chip {
+/* Individual card */
+.cf-card {
+  flex: 0 0 auto;
+  width: 130px;
+  height: 150px;
+  border-radius: 20px;
+  border: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-  min-width: 100px;
-  padding: 0.5rem;
-  background: transparent;
-  border: none;
+  justify-content: flex-end;
+  padding: 0 0.75rem 1rem;
   cursor: pointer;
-  transition: all 0.2s ease;
   position: relative;
-  flex-shrink: 0;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
 }
 
-.cuisine-chip:hover {
-  transform: translateY(-5px);
+/* Glassy sheen overlay */
+.cf-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(255,255,255,0.35) 0%, transparent 60%);
+  pointer-events: none;
+  transition: opacity 0.25s ease;
 }
 
-.cuisine-emoji-container {
-  width: 90px;
-  height: 90px;
-  border-radius: 28px; /* Squircle look */
+/* Bottom dark gradient so text is readable */
+.cf-card::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 60%;
+  background: linear-gradient(to top, rgba(0,0,0,0.28) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.cf-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.15);
+}
+
+.cf-card:hover::before { opacity: 0.5; }
+
+/* Active ring */
+.cf-card-active {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 0 0 3px white, 0 0 0 5.5px var(--primary-color), 0 16px 32px rgba(249, 115, 22, 0.3);
+}
+
+/* Tag badge */
+.cf-tag {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  background: rgba(255,255,255,0.88);
+  color: #1C1C1E;
+  font-size: 0.58rem;
+  font-weight: 800;
+  font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.4rem;
+  border-radius: 100px;
+  line-height: 1.4;
+}
+
+/* Emoji wrapper — floating circle */
+.cf-emoji-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -65%);
+  width: 64px;
+  height: 64px;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(6px);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.8rem;
-  box-shadow: inset 0 -4px 12px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.06);
-  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-  border: 2px solid transparent;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.cuisine-chip-active .cuisine-emoji-container {
-  border-color: white;
-  box-shadow: 0 12px 24px rgba(249, 115, 22, 0.35);
-  transform: scale(1.05);
+.cf-card:hover .cf-emoji-wrap {
+  transform: translate(-50%, -70%) scale(1.1);
 }
 
-.cuisine-chip-active .cuisine-emoji {
-  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
-}
-
-.cuisine-chip:hover .cuisine-emoji-container {
-  box-shadow: inset 0 -4px 12px rgba(0,0,0,0.05), 0 12px 24px rgba(0,0,0,0.12);
-  transform: scale(1.05);
-}
-
-.cuisine-emoji {
+.cf-emoji {
+  font-size: 2rem;
   line-height: 1;
   display: block;
-  transition: filter 0.2s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
 
-.cuisine-label {
-  font-size: 0.72rem;
-  font-weight: 600;
+/* Name */
+.cf-name {
+  position: relative;
+  z-index: 1;
+  font-size: 0.78rem;
+  font-weight: 800;
   font-family: 'Outfit', sans-serif;
-  color: var(--text-primary);
+  color: white;
   text-align: center;
   line-height: 1.2;
-  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  margin: 0;
 }
 
-.cuisine-chip-active .cuisine-label {
-  color: var(--primary-color);
-}
-
-.cuisine-underline {
+.cf-active-ring {
   position: absolute;
-  bottom: -2px;
-  left: 20%;
-  right: 20%;
-  height: 2.5px;
-  background: var(--primary-color);
-  border-radius: 2px;
+  inset: 0;
+  border-radius: 20px;
+  border: 3px solid rgba(255,255,255,0.6);
+  pointer-events: none;
 }
 
-/* Scroll buttons */
-.cuisine-scroll-btn {
-  width: 34px;
-  height: 34px;
-  flex-shrink: 0;
-  background: var(--surface-color);
-  border: 1.5px solid var(--border-color);
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-primary);
-  cursor: pointer;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.2s ease;
-  z-index: 1;
-}
-
-.cuisine-scroll-btn:hover {
-  background: var(--primary-color);
-  color: white;
-  border-color: var(--primary-color);
+/* Responsive */
+@media (max-width: 640px) {
+  .cf-card {
+    width: 110px;
+    height: 130px;
+  }
+  .cf-emoji-wrap {
+    width: 54px;
+    height: 54px;
+  }
+  .cf-emoji { font-size: 1.6rem; }
 }

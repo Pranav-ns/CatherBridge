@@ -1,55 +1,71 @@
-import React, { useRef } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useRef, useState } from 'react';
 import './CuisineFilter.css';
 
 const CUISINES = [
-  { name: 'South Indian', emoji: '🍚', color: '#FEF08A' }, // Yellow
-  { name: 'North Indian', emoji: '🍛', color: '#FED7AA' }, // Orange
-  { name: 'Biryani',      emoji: '🥘', color: '#FECACA' }, // Red
-  { name: 'Desserts',     emoji: '🍰', color: '#FBCFE8' }, // Pink
-  { name: 'Ice Cream',    emoji: '🍦', color: '#E9D5FF' }, // Purple
-  { name: 'Chinese',      emoji: '🥡', color: '#BFDBFE' }, // Blue
-  { name: 'Burger',       emoji: '🍔', color: '#FDE68A' }, // Warm Yellow
-  { name: 'Rolls',        emoji: '🌯', color: '#A7F3D0' }, // Emerald
-  { name: 'Noodles',      emoji: '🍜', color: '#BAE6FD' }, // Light Blue
-  { name: 'Idli',         emoji: '⚪', color: '#E5E7EB' }, // Gray
-  { name: 'Momo',         emoji: '🥟', color: '#FEE2E2' }, // Light Red
-  { name: 'Shawarma',     emoji: '🥙', color: '#D9F99D' }, // Lime
-  { name: 'Pastry',       emoji: '🥐', color: '#FDE047' }, // Yellow Dark
-  { name: 'Pasta',        emoji: '🍝', color: '#FECDD3' }, // Rose
+  { name: 'South Indian', emoji: '🍚', gradient: 'linear-gradient(135deg, #F59E0B 0%, #FDE68A 100%)',    tag: 'Bestseller' },
+  { name: 'North Indian', emoji: '🍛', gradient: 'linear-gradient(135deg, #F97316 0%, #FED7AA 100%)',    tag: 'Popular'    },
+  { name: 'Biryani',      emoji: '🥘', gradient: 'linear-gradient(135deg, #DC2626 0%, #FCA5A5 100%)',    tag: 'Must Try'   },
+  { name: 'Desserts',     emoji: '🍰', gradient: 'linear-gradient(135deg, #EC4899 0%, #FBCFE8 100%)',    tag: null         },
+  { name: 'Ice Cream',    emoji: '🍦', gradient: 'linear-gradient(135deg, #8B5CF6 0%, #DDD6FE 100%)',    tag: null         },
+  { name: 'Chinese',      emoji: '🥡', gradient: 'linear-gradient(135deg, #3B82F6 0%, #BFDBFE 100%)',    tag: 'Trending'   },
+  { name: 'Burger',       emoji: '🍔', gradient: 'linear-gradient(135deg, #D97706 0%, #FDE68A 100%)',    tag: null         },
+  { name: 'Rolls',        emoji: '🌯', gradient: 'linear-gradient(135deg, #059669 0%, #A7F3D0 100%)',    tag: null         },
+  { name: 'Noodles',      emoji: '🍜', gradient: 'linear-gradient(135deg, #0EA5E9 0%, #BAE6FD 100%)',    tag: null         },
+  { name: 'Momo',         emoji: '🥟', gradient: 'linear-gradient(135deg, #E11D48 0%, #FEE2E2 100%)',    tag: 'New'        },
+  { name: 'Shawarma',     emoji: '🥙', gradient: 'linear-gradient(135deg, #65A30D 0%, #D9F99D 100%)',    tag: null         },
+  { name: 'Pastry',       emoji: '🥐', gradient: 'linear-gradient(135deg, #CA8A04 0%, #FDE047 100%)',    tag: null         },
+  { name: 'Pasta',        emoji: '🍝', gradient: 'linear-gradient(135deg, #DB2777 0%, #FECDD3 100%)',    tag: null         },
+  { name: 'Thali',        emoji: '🍱', gradient: 'linear-gradient(135deg, #7C3AED 0%, #EDE9FE 100%)',    tag: null         },
 ];
 
 const CuisineFilter = ({ selected, onSelect }) => {
   const scrollRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
-  const scroll = (dir) => {
-    scrollRef.current.scrollBy({ left: dir * 240, behavior: 'smooth' });
+  const onMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
   };
+  const onMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    scrollRef.current.scrollLeft = scrollLeft - (x - startX);
+  };
+  const onMouseUp = () => setIsDragging(false);
 
   return (
-    <div className="cuisine-filter-wrap">
-      <button className="cuisine-scroll-btn left" onClick={() => scroll(-1)}>
-        <ChevronLeft size={20} />
-      </button>
-
-      <div className="cuisine-scroll" ref={scrollRef}>
-        {CUISINES.map(c => (
-          <button
-            key={c.name}
-            className={`cuisine-chip ${selected === c.name ? 'cuisine-chip-active' : ''}`}
-            onClick={() => onSelect(selected === c.name ? '' : c.name)}
-          >
-            <div className="cuisine-emoji-container" style={{ backgroundColor: selected === c.name ? 'var(--primary-color)' : c.color }}>
-              <span className="cuisine-emoji">{c.emoji}</span>
-            </div>
-            <span className="cuisine-label">{c.name}</span>
-          </button>
-        ))}
+    <div className="cf-root">
+      <div
+        className={`cf-scroll ${isDragging ? 'cf-dragging' : ''}`}
+        ref={scrollRef}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseUp}
+      >
+        {CUISINES.map((c) => {
+          const isActive = selected === c.name;
+          return (
+            <button
+              key={c.name}
+              className={`cf-card ${isActive ? 'cf-card-active' : ''}`}
+              onClick={() => onSelect(isActive ? '' : c.name)}
+              style={{ backgroundImage: c.gradient }}
+            >
+              {c.tag && <span className="cf-tag">{c.tag}</span>}
+              <div className="cf-emoji-wrap">
+                <span className="cf-emoji">{c.emoji}</span>
+              </div>
+              <p className="cf-name">{c.name}</p>
+              {isActive && <div className="cf-active-ring" />}
+            </button>
+          );
+        })}
       </div>
-
-      <button className="cuisine-scroll-btn right" onClick={() => scroll(1)}>
-        <ChevronRight size={20} />
-      </button>
     </div>
   );
 };
