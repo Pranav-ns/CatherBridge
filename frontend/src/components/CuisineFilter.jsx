@@ -3,20 +3,20 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import './CuisineFilter.css';
 
 const CUISINES = [
-  { name: 'South Indian', emoji: '🍚' },
-  { name: 'North Indian', emoji: '🍛' },
-  { name: 'Biryani',      emoji: '🥘' },
-  { name: 'Desserts',     emoji: '🍰' },
-  { name: 'Ice Cream',    emoji: '🍦' },
-  { name: 'Chinese',      emoji: '🥡' },
-  { name: 'Burger',       emoji: '🍔' },
-  { name: 'Rolls',        emoji: '🌯' },
-  { name: 'Noodles',      emoji: '🍜' },
-  { name: 'Idli',         emoji: '⚪' },
-  { name: 'Momo',         emoji: '🥟' },
-  { name: 'Shawarma',     emoji: '🥙' },
-  { name: 'Pastry',       emoji: '🥐' },
-  { name: 'Pasta',        emoji: '🍝' },
+  { name: 'South Indian', emoji: '🍚', color: '#FEF08A' }, // Yellow
+  { name: 'North Indian', emoji: '🍛', color: '#FED7AA' }, // Orange
+  { name: 'Biryani',      emoji: '🥘', color: '#FECACA' }, // Red
+  { name: 'Desserts',     emoji: '🍰', color: '#FBCFE8' }, // Pink
+  { name: 'Ice Cream',    emoji: '🍦', color: '#E9D5FF' }, // Purple
+  { name: 'Chinese',      emoji: '🥡', color: '#BFDBFE' }, // Blue
+  { name: 'Burger',       emoji: '🍔', color: '#FDE68A' }, // Warm Yellow
+  { name: 'Rolls',        emoji: '🌯', color: '#A7F3D0' }, // Emerald
+  { name: 'Noodles',      emoji: '🍜', color: '#BAE6FD' }, // Light Blue
+  { name: 'Idli',         emoji: '⚪', color: '#E5E7EB' }, // Gray
+  { name: 'Momo',         emoji: '🥟', color: '#FEE2E2' }, // Light Red
+  { name: 'Shawarma',     emoji: '🥙', color: '#D9F99D' }, // Lime
+  { name: 'Pastry',       emoji: '🥐', color: '#FDE047' }, // Yellow Dark
+  { name: 'Pasta',        emoji: '🍝', color: '#FECDD3' }, // Rose
 ];
 
 const CuisineFilter = ({ selected, onSelect }) => {
@@ -39,7 +39,7 @@ const CuisineFilter = ({ selected, onSelect }) => {
             className={`cuisine-chip ${selected === c.name ? 'cuisine-chip-active' : ''}`}
             onClick={() => onSelect(selected === c.name ? '' : c.name)}
           >
-            <div className="cuisine-emoji-container">
+            <div className="cuisine-emoji-container" style={{ backgroundColor: selected === c.name ? 'var(--primary-color)' : c.color }}>
               <span className="cuisine-emoji">{c.emoji}</span>
             </div>
             <span className="cuisine-label">{c.name}</span>

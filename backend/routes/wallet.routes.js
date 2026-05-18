@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const { protect } = require('../middleware/auth.middleware');
+const { protect } = require('../middleware/auth');
 
 // @route   GET /api/wallet
 // @desc    Get wallet balance and history

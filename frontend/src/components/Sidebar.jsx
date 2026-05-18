@@ -73,10 +73,9 @@ const Sidebar = ({ isOpen, onClose }) => {
             <span>My Orders</span>
           </button>
 
-          <button className="sidebar-item" onClick={() => navTo('/dashboard')}>
+          <button className="sidebar-item" onClick={() => navTo('/tiffin-schedule')}>
             <Bell size={20} />
-            <span>My Subscriptions</span>
-            <span className="sidebar-badge">Tiffin</span>
+            <span>Tiffin Schedule</span>
           </button>
 
           <button className="sidebar-item" onClick={() => navTo('/')}>

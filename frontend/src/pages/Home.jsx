@@ -22,7 +22,9 @@ const CANADIAN_CITIES = [
   { name: 'Mississauga' },
 ];
 
-const Home = () => {
+const VEG_KEYWORDS = ['veg', 'south indian', 'north indian', 'dessert', 'ice cream', 'bakery', 'pastry', 'idli', 'salad'];
+
+const Home = ({ isVegMode }) => {
   const [caterers, setCaterers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -103,7 +105,9 @@ const Home = () => {
       !selectedCuisine ||
       c.cuisine.toLowerCase().includes(selectedCuisine.toLowerCase());
       
-    return matchesSearch && matchesLocation && matchesCuisine;
+    const matchesVeg = !isVegMode || VEG_KEYWORDS.some(kw => c.cuisine.toLowerCase().includes(kw));
+
+    return matchesSearch && matchesLocation && matchesCuisine && matchesVeg;
   });
 
   return (

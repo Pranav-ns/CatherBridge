@@ -1,0 +1,679 @@
+/* ── TIFFIN SCHEDULE PAGE ── */
+.tiffin-page {
+  min-height: 100vh;
+  background: var(--bg-color);
+  padding-bottom: 5rem;
+}
+
+/* ── HEADER ── */
+.tiffin-header {
+  background: white;
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 68px;
+  z-index: 50;
+}
+
+.tiffin-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.tiffin-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-family: 'Outfit', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.tiffin-back-btn:hover {
+  background: var(--primary-xlight);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.tiffin-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.tiffin-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.tiffin-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.tiffin-week-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--bg-secondary);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--border-color);
+  margin-left: auto;
+}
+
+.tiffin-week-nav span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: 'Outfit', sans-serif;
+  white-space: nowrap;
+}
+
+.tiffin-week-nav button {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tiffin-week-nav button:hover:not(:disabled) {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.tiffin-week-nav button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── WEEK PICKER ── */
+.week-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+  padding: 2.5rem 0;
+}
+
+.week-card {
+  background: white;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.week-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.12);
+  transform: translateY(-4px);
+}
+
+.week-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.week-card-label {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-family: 'Outfit', sans-serif;
+}
+
+.week-card-badge {
+  background: var(--primary-xlight);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-light);
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  font-family: 'Outfit', sans-serif;
+}
+
+.week-card-range {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.week-card-days {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.week-mini-day {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  padding: 0.4rem 0.2rem;
+  transition: background 0.2s ease;
+}
+
+.week-mini-day-filled {
+  background: var(--primary-xlight);
+  border: 1px solid var(--primary-light);
+}
+
+.week-mini-name {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+}
+
+.week-mini-date {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.week-mini-day-filled .week-mini-date {
+  color: var(--primary-color);
+}
+
+.week-card-arrow {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  font-family: 'Outfit', sans-serif;
+  margin-top: 0.25rem;
+}
+
+/* ── SCHEDULE GRID ── */
+.tiffin-grid-container {
+  padding-top: 2rem;
+  overflow-x: auto;
+}
+
+.tiffin-grid {
+  display: flex;
+  gap: 0;
+  min-width: 900px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: white;
+  box-shadow: var(--shadow-md);
+}
+
+/* Left meal label column */
+.tiffin-meal-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 110px;
+  flex-shrink: 0;
+  border-right: 1.5px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.tiffin-meal-header-cell {
+  height: 64px;
+  border-bottom: 1.5px solid var(--border-color);
+}
+
+.tiffin-meal-label-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0.875rem;
+  height: 100px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tiffin-meal-label-cell:last-child {
+  border-bottom: none;
+}
+
+.meal-emoji {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.meal-slot-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: 'Outfit', sans-serif;
+}
+
+.meal-slot-time {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+}
+
+/* Day columns */
+.tiffin-day-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border-color);
+  min-width: 130px;
+}
+
+.tiffin-day-col:last-child {
+  border-right: none;
+}
+
+.tiffin-col-past {
+  opacity: 0.55;
+}
+
+.tiffin-day-header {
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  background: white;
+  border-bottom: 1.5px solid var(--border-color);
+  position: sticky;
+  top: 0;
+}
+
+.tiffin-day-name {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tiffin-day-date {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Slot cells */
+.tiffin-slot-cell {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.5rem;
+  transition: background 0.2s ease;
+}
+
+.tiffin-slot-cell:last-child {
+  border-bottom: none;
+}
+
+.tiffin-slot-cell:hover {
+  background: var(--bg-secondary);
+}
+
+.tiffin-slot-filled {
+  background: var(--primary-xlight);
+}
+
+.tiffin-slot-filled:hover {
+  background: #FEF3E8;
+}
+
+/* Add button */
+.tiffin-add-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--bg-secondary);
+  border: 2px dashed var(--border-color);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tiffin-add-btn:hover:not(:disabled) {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+.tiffin-add-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Assigned caterer card */
+.tiffin-assigned-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+  padding-top: 0.25rem;
+}
+
+.assigned-photo {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: white;
+  border: 2px solid var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.assigned-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.assigned-info {
+  text-align: center;
+}
+
+.assigned-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: 'Outfit', sans-serif;
+  line-height: 1.2;
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.assigned-cuisine {
+  font-size: 0.62rem;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.assigned-remove {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  background: #FEE2E2;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--error-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.assigned-remove:hover {
+  background: var(--error-color);
+  color: white;
+  transform: scale(1.1);
+}
+
+/* ── CATERER PICKER MODAL ── */
+.tiffin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 28, 30, 0.55);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@media (min-width: 640px) {
+  .tiffin-modal-overlay {
+    align-items: center;
+  }
+}
+
+.tiffin-modal {
+  background: white;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%;
+  max-width: 560px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 640px) {
+  .tiffin-modal {
+    border-radius: var(--radius-xl);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.2s ease;
+  }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.tiffin-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tiffin-modal-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0 0 0.2rem;
+}
+
+.tiffin-modal-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.tiffin-modal-close {
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-full);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.tiffin-modal-close:hover {
+  background: #FEE2E2;
+  color: var(--error-color);
+  border-color: #FECACA;
+}
+
+.tiffin-modal-search {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.modal-search-icon {
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.tiffin-modal-search input {
+  border: none;
+  background: transparent;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  width: 100%;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  box-shadow: none;
+}
+
+.tiffin-modal-list {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.tiffin-loading,
+.tiffin-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 3rem 2rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Caterer row in modal */
+.tiffin-caterer-row {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 1.5rem;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.tiffin-caterer-row:last-child { border-bottom: none; }
+
+.tiffin-caterer-row:hover {
+  background: var(--primary-xlight);
+}
+
+.tiffin-caterer-photo {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tiffin-caterer-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tiffin-caterer-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.tc-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: 'Outfit', sans-serif;
+  margin: 0 0 0.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.tc-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.tc-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--primary-xlight);
+  color: var(--primary-color);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .tiffin-week-nav { display: none; }
+  .tiffin-header-inner { gap: 0.75rem; }
+  .tiffin-title { font-size: 1.2rem; }
+  .week-picker-grid { grid-template-columns: 1fr; }
+}

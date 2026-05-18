@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ChefHat, LogOut, LayoutDashboard, Menu } from 'lucide-react';
+import { ChefHat, LogOut, LayoutDashboard, Menu, Leaf } from 'lucide-react';
 import './Navbar.css';
 
-const Navbar = ({ onOpenSidebar }) => {
+const Navbar = ({ onOpenSidebar, isVegMode, setIsVegMode }) => {
   const navigate = useNavigate();
   const userStr = localStorage.getItem('user');
   const user = userStr ? JSON.parse(userStr) : null;
@@ -40,8 +40,22 @@ const Navbar = ({ onOpenSidebar }) => {
                   {user.name?.charAt(0).toUpperCase()}
                 </div>
                 <span className="user-name">
-                  {user.name} · {user.role === 'client' ? 'Customer' : 'Caterer'}
+                  {user.name}
                 </span>
+              </div>
+              
+              <div className="veg-mode-toggle-wrapper">
+                <span className={`veg-mode-label ${isVegMode ? 'veg-mode-active-text' : ''}`}>
+                  <Leaf size={14} className="veg-leaf-icon" /> Veg Mode
+                </span>
+                <label className="veg-toggle">
+                  <input 
+                    type="checkbox" 
+                    checked={isVegMode} 
+                    onChange={(e) => setIsVegMode(e.target.checked)} 
+                  />
+                  <span className="veg-slider"></span>
+                </label>
               </div>
               <button
                 className="btn btn-ghost btn-sm"
