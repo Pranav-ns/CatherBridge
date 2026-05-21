@@ -24,6 +24,7 @@ const reviewRoutes = require('./routes/review.routes');
 const subscriptionRoutes = require('./routes/subscription.routes');
 const paymentRoutes = require('./routes/payment.routes');
 const walletRoutes = require('./routes/wallet.routes');
+const chatRoutes = require('./routes/chat.routes');
 
 // Mount routers
 app.use('/api/auth', authRoutes);
@@ -33,6 +34,7 @@ app.use('/api/reviews', reviewRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/wallet', walletRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Root route
 app.get('/', (req, res) => {

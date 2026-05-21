@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import CatererDashboard from './pages/CatererDashboard';
 import TiffinSchedule from './pages/TiffinSchedule';
+import ChatbotWidget from './components/ChatbotWidget';
 import './App.css';
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
             <Route path="/tiffin-schedule" element={<TiffinSchedule />} />
           </Routes>
         </main>
+        <ChatbotWidget />
       </div>
     </Router>
   );
