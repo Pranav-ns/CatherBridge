@@ -14,6 +14,7 @@ import './App.css';
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isVegMode, setIsVegMode] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
 
   return (
     <Router>
@@ -23,7 +24,7 @@ function App() {
           isVegMode={isVegMode}
           setIsVegMode={setIsVegMode}
         />
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} onOpenChat={() => { setSidebarOpen(false); setChatOpen(true); }} />
         <main>
           <Routes>
             <Route path="/" element={<Home isVegMode={isVegMode} />} />
@@ -34,7 +35,7 @@ function App() {
             <Route path="/tiffin-schedule" element={<TiffinSchedule />} />
           </Routes>
         </main>
-        <ChatbotWidget />
+        <ChatbotWidget isOpen={chatOpen} setIsOpen={setChatOpen} />
       </div>
     </Router>
   );

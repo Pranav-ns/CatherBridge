@@ -3,8 +3,7 @@ import { MessageSquare, X, Send, User, Bot, Loader2 } from 'lucide-react';
 import api from '../services/api';
 import './ChatbotWidget.css';
 
-const ChatbotWidget = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const ChatbotWidget = ({ isOpen, setIsOpen }) => {
   const [messages, setMessages] = useState([
     { sender: 'bot', text: 'Hi! I am the CaterBridge AI assistant. How can I help you today?' }
   ]);

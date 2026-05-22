@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import './Sidebar.css';
 
-const Sidebar = ({ isOpen, onClose }) => {
+const Sidebar = ({ isOpen, onClose, onOpenChat }) => {
   const navigate = useNavigate();
   const userStr = localStorage.getItem('user');
   const user = userStr ? JSON.parse(userStr) : null;
@@ -105,7 +105,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             <span className="sidebar-promo">$20 off</span>
           </button>
 
-          <button className="sidebar-item sidebar-item-disabled">
+          <button className="sidebar-item" onClick={onOpenChat}>
             <HelpCircle size={20} />
             <span>Help &amp; Support</span>
           </button>
