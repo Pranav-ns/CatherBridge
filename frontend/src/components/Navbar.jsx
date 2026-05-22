@@ -24,8 +24,8 @@ const Navbar = ({ onOpenSidebar, isVegMode, setIsVegMode }) => {
             <Menu size={22} />
           </button>
           <Link to="/" className="nav-brand">
-            <div className="nav-brand-icon">
-              <ChefHat size={20} color="white" />
+            <div className="nav-brand-icon" style={{ backgroundColor: 'transparent', width: '36px', height: '36px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src="/logo.png" alt="CaterBridge Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             <span className="nav-brand-name">CaterBridge</span>
           </Link>
