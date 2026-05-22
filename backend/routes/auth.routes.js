@@ -37,12 +37,20 @@ router.post('/register', async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
 
+      // Generate referral code
+      const generateReferralCode = (nameStr) => {
+        const prefix = nameStr.replace(/[^a-zA-Z0-9]/g, '').substring(0, 3).toUpperCase() || 'USR';
+        const randomNum = Math.floor(1000 + Math.random() * 9000);
+        return `REF-${prefix}-${randomNum}`;
+      };
+
       // Create user
       const user = await User.create({
         name,
         email,
         password: hashedPassword,
-        role: 'client'
+        role: 'client',
+        referralCode: generateReferralCode(name)
       });
 
       res.status(201).json({

@@ -8,6 +8,9 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import CatererDashboard from './pages/CatererDashboard';
 import TiffinSchedule from './pages/TiffinSchedule';
+import FavouritesPage from './pages/FavouritesPage';
+import OffersPage from './pages/OffersPage';
+import ReferralPage from './pages/ReferralPage';
 import ChatbotWidget from './components/ChatbotWidget';
 import './App.css';
 
@@ -33,6 +36,9 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/caterer-dashboard" element={<CatererDashboard />} />
             <Route path="/tiffin-schedule" element={<TiffinSchedule />} />
+            <Route path="/favourites" element={<FavouritesPage isVegMode={isVegMode} />} />
+            <Route path="/offers" element={<OffersPage />} />
+            <Route path="/referrals" element={<ReferralPage />} />
           </Routes>
         </main>
         <ChatbotWidget isOpen={chatOpen} setIsOpen={setChatOpen} />

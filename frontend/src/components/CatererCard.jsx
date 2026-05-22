@@ -1,16 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import api from '../services/api';
 import { MapPin, DollarSign, Utensils, Star, ChevronRight, Bell, Heart } from 'lucide-react';
 import RequestModal from './RequestModal';
 import ReviewModal from './ReviewModal';
 import SubscribeModal from './SubscribeModal';
 import './CatererCard.css';
 
-const CatererCard = ({ caterer }) => {
+const CatererCard = ({ caterer, initialFavorite = false }) => {
   const [isRequestModalOpen, setIsRequestModalOpen]   = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen]     = useState(false);
   const [isSubscribeModalOpen, setIsSubscribeModalOpen] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(initialFavorite);
+
+  useEffect(() => {
+    setIsFavorite(initialFavorite);
+  }, [initialFavorite]);
+
+  const handleFavoriteToggle = async () => {
+    const userStr = localStorage.getItem('user');
+    const user = userStr ? JSON.parse(userStr) : null;
+    if (!user || user.role !== 'client') {
+      alert('Please login as a customer to add favourites.');
+      return;
+    }
+    try {
+      await api.post(`/users/favorites/${caterer._id}`);
+      setIsFavorite(!isFavorite);
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+    }
+  };
 
   const userStr = localStorage.getItem('user');
   const user = userStr ? JSON.parse(userStr) : null;
@@ -29,7 +49,7 @@ const CatererCard = ({ caterer }) => {
           )}
           <button 
             className={`favorite-btn ${isFavorite ? 'favorite-active' : ''}`}
-            onClick={() => setIsFavorite(!isFavorite)}
+            onClick={handleFavoriteToggle}
             aria-label="Toggle favorite"
           >
             <Heart size={18} fill={isFavorite ? "var(--primary-color)" : "none"} color={isFavorite ? "var(--primary-color)" : "currentColor"} />

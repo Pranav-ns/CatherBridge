@@ -29,6 +29,15 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  favorites: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Caterer'
+  }],
+  referralCode: {
+    type: String,
+    unique: true,
+    sparse: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

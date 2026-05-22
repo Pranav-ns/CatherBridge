@@ -78,7 +78,7 @@ const Sidebar = ({ isOpen, onClose, onOpenChat }) => {
             <span>Tiffin Schedule</span>
           </button>
 
-          <button className="sidebar-item" onClick={() => navTo('/')}>
+          <button className="sidebar-item" onClick={() => navTo('/favourites')}>
             <Heart size={20} />
             <span>Favourites</span>
           </button>
@@ -89,17 +89,12 @@ const Sidebar = ({ isOpen, onClose, onOpenChat }) => {
             <span className="sidebar-coming">Soon</span>
           </button>
 
-          <button className="sidebar-item" onClick={() => navTo('/')}>
+          <button className="sidebar-item" onClick={() => navTo('/offers')}>
             <Tag size={20} />
             <span>Offers &amp; Promotions</span>
           </button>
 
-          <button className="sidebar-item" onClick={() => navTo('/')}>
-            <Package size={20} />
-            <span>Bulk Orders</span>
-          </button>
-
-          <button className="sidebar-item" onClick={() => navTo('/')}>
+          <button className="sidebar-item" onClick={() => navTo('/referrals')}>
             <Users size={20} />
             <span>Invite Friends</span>
             <span className="sidebar-promo">$20 off</span>

@@ -28,6 +28,7 @@ const chatRoutes = require('./routes/chat.routes');
 
 // Mount routers
 app.use('/api/auth', authRoutes);
+app.use('/api/users', require('./routes/user.routes'));
 app.use('/api/caterers', catererRoutes);
 app.use('/api/requests', requestRoutes);
 app.use('/api/reviews', reviewRoutes);
@@ -55,7 +56,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5007;
 
 app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
