@@ -9,9 +9,15 @@ dotenv.config();
 // Connect to database
 connectDB();
 
+// Load custom middlewares
+const metricsMiddleware = require('./middleware/metrics.middleware');
+const errorMiddleware = require('./middleware/error.middleware');
+const { register } = require('./utils/metrics');
+
 const app = express();
 
 // Middleware
+app.use(metricsMiddleware);
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cors());
@@ -42,19 +48,20 @@ app.get('/', (req, res) => {
   res.send('CaterBridge API is running...');
 });
 
+// Prometheus metrics endpoint
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', register.contentType);
+  const metrics = await register.metrics();
+  res.send(metrics);
+});
+
 // 404 Handler for undefined routes
 app.use((req, res, next) => {
   res.status(404).json({ message: `Route not found: ${req.originalUrl}` });
 });
 
 // Global Error Handler Middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(err.status || 500).json({
-    message: err.message || 'Server Error',
-    stack: process.env.NODE_ENV === 'production' ? null : err.stack,
-  });
-});
+app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 5007;
 

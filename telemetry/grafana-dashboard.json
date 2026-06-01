@@ -1,0 +1,185 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    },
+    {
+      "name": "DS_LOKI",
+      "label": "Loki",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "loki",
+      "pluginName": "Loki"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    }
+  ],
+  "title": "CaterBridge Production Observability",
+  "tags": ["nodejs", "express", "aws", "infrastructure"],
+  "timezone": "browser",
+  "refresh": "10s",
+  "panels": [
+    {
+      "type": "row",
+      "title": "Infrastructure Health",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "id": 1
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "CPU Utilization (%)",
+      "datasource": "${DS_PROMETHEUS}",
+      "gridPos": { "h": 8, "w": 6, "x": 0, "y": 1 },
+      "targets": [
+        {
+          "expr": "100 - (avg by (instance) (irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+          "legendFormat": "CPU Usage"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "timeseries",
+      "title": "Memory Usage (MB)",
+      "datasource": "${DS_PROMETHEUS}",
+      "gridPos": { "h": 8, "w": 6, "x": 6, "y": 1 },
+      "targets": [
+        {
+          "expr": "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / 1024 / 1024",
+          "legendFormat": "Used Memory"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "gauge",
+      "title": "Disk Usage (%)",
+      "datasource": "${DS_PROMETHEUS}",
+      "gridPos": { "h": 8, "w": 6, "x": 12, "y": 1 },
+      "targets": [
+        {
+          "expr": "100 - ((node_filesystem_avail_bytes{mountpoint=\"/\"} * 100) / node_filesystem_size_bytes{mountpoint=\"/\"})",
+          "legendFormat": "Disk"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Network Traffic (MB/s)",
+      "datasource": "${DS_PROMETHEUS}",
+      "gridPos": { "h": 8, "w": 6, "x": 18, "y": 1 },
+      "targets": [
+        {
+          "expr": "irate(node_network_receive_bytes_total[5m]) / 1024 / 1024",
+          "legendFormat": "Inbound"
+        },
+        {
+          "expr": "irate(node_network_transmit_bytes_total[5m]) / 1024 / 1024",
+          "legendFormat": "Outbound"
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "title": "Application Metrics (Node.js/Express)",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 9 },
+      "id": 6
+    },
+    {
+      "id": 7,
+      "type": "timeseries",
+      "title": "Request Volume (per minute)",
+      "datasource": "${DS_PROMETHEUS}",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 10 },
+      "targets": [
+        {
+          "expr": "sum(rate(http_requests_total[1m])) * 60",
+          "legendFormat": "Total Requests"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "type": "timeseries",
+      "title": "API Error Rate",
+      "datasource": "${DS_PROMETHEUS}",
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 10 },
+      "targets": [
+        {
+          "expr": "sum(rate(http_requests_total{status_code=~\"5..|4..\"}[1m])) / sum(rate(http_requests_total[1m])) * 100",
+          "legendFormat": "Error %"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "barchart",
+      "title": "Most Used Endpoints",
+      "datasource": "${DS_PROMETHEUS}",
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 10 },
+      "targets": [
+        {
+          "expr": "sum(rate(http_requests_total[5m])) by (route)",
+          "legendFormat": "{{route}}"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "heatmap",
+      "title": "API Response Time (Latency)",
+      "datasource": "${DS_PROMETHEUS}",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 18 },
+      "targets": [
+        {
+          "expr": "sum(rate(http_request_duration_seconds_bucket[5m])) by (le)",
+          "format": "heatmap"
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "title": "Application Logs (Loki)",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 26 },
+      "id": 11
+    },
+    {
+      "id": 12,
+      "type": "logs",
+      "title": "Real-time Application Logs",
+      "datasource": "${DS_LOKI}",
+      "gridPos": { "h": 10, "w": 12, "x": 0, "y": 27 },
+      "targets": [
+        {
+          "expr": "{app=\"caterbridge-backend\"}"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "type": "logs",
+      "title": "Error Logs & Exceptions",
+      "datasource": "${DS_LOKI}",
+      "gridPos": { "h": 10, "w": 12, "x": 12, "y": 27 },
+      "targets": [
+        {
+          "expr": "{app=\"caterbridge-backend\", level=\"error\"}"
+        }
+      ]
+    }
+  ]
+}

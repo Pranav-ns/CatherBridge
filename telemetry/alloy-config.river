@@ -1,0 +1,40 @@
+// alloy-config.river
+// Grafana Alloy Configuration for AWS EC2
+// This file collects host metrics (CPU, Memory, Disk, Network) and Node.js application metrics
+
+// --- Prometheus Metrics Collection ---
+
+// Scrape Node.js application metrics
+prometheus.scrape "nodejs_app" {
+  targets = [
+    {"__address__" = "localhost:5000"}, // Ensure this matches the PORT in backend
+  ]
+  metrics_path = "/metrics"
+  forward_to   = [prometheus.remote_write.grafana_cloud.receiver]
+}
+
+// Scrape EC2 Host metrics (Node Exporter built-in to Alloy)
+prometheus.exporter.unix "ec2_host" {
+  include_exporter_metrics = true
+}
+
+prometheus.scrape "ec2_host_scraper" {
+  targets    = prometheus.exporter.unix.ec2_host.targets
+  forward_to = [prometheus.remote_write.grafana_cloud.receiver]
+}
+
+// Forward all metrics to Grafana Cloud Prometheus
+prometheus.remote_write "grafana_cloud" {
+  endpoint {
+    name = "hosted-prometheus"
+    url  = "https://prometheus-prod-43-prod-ap-south-1.grafana.net/api/prom/push"
+    basic_auth {
+      username = "3271748"
+      password = "glc_eyJvIjoiMTc5NTExOCIsIm4iOiJzdGFjay0xNjczNzYyLWFsbG95LWdyYWZhbmEtZGFzaGJvYXJkLWZvci1teS1wcm9qZWN0IiwiayI6Iko4MDNoTURpRzNzMjlNeTYzdjlWcXM3dCIsIm0iOnsiciI6InByb2QtYXAtc291dGgtMSJ9fQ=="
+    }
+  }
+}
+
+// Note: Logs from the Node.js application are sent directly using winston-loki 
+// in the application code, so we don't strictly need to scrape them from files here,
+// unless you also want to collect system logs (/var/log/syslog).
