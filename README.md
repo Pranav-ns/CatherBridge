@@ -310,7 +310,3 @@ VITE_STRIPE_PUBLISHABLE_KEY=
 - Improve chatbot retrieval using embeddings/vector search
 - Add email notifications for request updates
 - Add production-ready logging and monitoring
-
-## License
-
-No license has been specified yet. Add a license file before making the project public or open source.
